@@ -13,9 +13,9 @@ int titling(int num)
     if (num == 1)
         return 1;
     else if (num == 2)
-        return 2;
+        return 3;
     else {
-        int a = titling(num - 1) + titling(num - 2);
+        int a = titling(num - 1) + 2 * titling(num - 2);
         title[num] = a % divide_num;
         return title[num];
     }
