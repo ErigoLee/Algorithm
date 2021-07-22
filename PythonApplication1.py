@@ -1,10 +1,18 @@
 ##function
-def compare_find(number):
-    if number % 4 == 0 and (number % 100 !=0 or number % 400 == 0):
-        print(1)
+def find_click(hour,min):
+    if min>=45:
+        min=min-45
+        print(hour,min)
     else:
-        print(0)
+        if hour == 0:
+            hour = 23
+            min = min +60-45
+            print(hour,min)
+        else:
+            hour = hour -1
+            min = min + 60 -45
+            print(hour, min)
 
 ##main
-number = int(input())
-compare_find(number)
+hour, min = map(int,input().split())
+find_click(hour,min)
