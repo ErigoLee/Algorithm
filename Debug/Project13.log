@@ -1,0 +1,4 @@
+﻿  소스.cpp
+C:\Users\이다연\source\repos\Project13\소스.cpp(20,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project13\소스.cpp(78,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Project13.vcxproj -> C:\Users\이다연\source\repos\Project13\Debug\Project13.exe
