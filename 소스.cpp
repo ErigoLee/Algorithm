@@ -1,65 +1,45 @@
 #include <iostream>
 using namespace std;
 
+long long progress[101];
+long long results[101];
+
+
+long long counting(int n)
+{
+    if (progress[n])
+        return progress[n];
+
+    if (n == 1 || n == 2 || n == 3)
+    {
+        progress[n] = 1;
+        return progress[n];
+    }
+
+    if (!progress[n - 3])
+        progress[n - 3] = counting(n - 3);
+
+    if (!progress[n - 2])
+        progress[n - 2] = counting(n - 2);
+
+    progress[n] = progress[n - 3] + progress[n - 2];
+
+    return progress[n];
+}
+
 int main() {
-    int count;
 
-    string sol[100];
+    int test_case;
+    cin >> test_case;
 
-    cin >> count;
-
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < test_case; i++)
     {
-        string public_key[1001];
-        string public_key2[1001];
-        string cipher[1001];
-        int solution[1001];
-        int count2;
-        cin >> count2;
-        for (int j = 0; j < count2; j++)
-        {
-            string a;
-            cin >> a;
-            public_key[j] = a;
-        }
-        for (int j = 0; j < count2; j++)
-        {
-            string a;
-            cin >> a;
-            public_key2[j] = a;
-        }
-
-
-        for (int j = 0; j < count2; j++)
-        {
-            for (int k = 0; k < count2; k++)
-            {
-                if (public_key[j].compare(public_key2[k]) == 0)
-                {
-                    solution[j] = k;
-                    break;
-                }
-            }
-        }
-
-        for (int j = 0; j < count2; j++)
-        {
-            string a;
-            cin >> a;
-            cipher[j] = a;
-        }
-        sol[i] = "";
-        for (int j = 0; j < count2; j++)
-        {
-            sol[i] += (cipher[solution[j]] + " ");
-        }
-
+        int n;
+        cin >> n;
+        results[i] = counting(n);
     }
 
-    for (int i = 0; i < count; i++)
-    {
-        cout << sol[i] << endl;
-    }
-
+    for (int i = 0; i < test_case; i++)
+        cout << results[i] << endl;
     return 0;
 }
