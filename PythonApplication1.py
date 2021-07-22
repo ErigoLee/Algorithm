@@ -1,14 +1,16 @@
-num_2=list()
-while True:
-    N, X = map(int,input().split())
-    if 1<= N and N <= 10000:
-        if 1<= X and X <= 10000:
-            break
-
-num = list(map(int,input().split()))
-for i in num:
-    if i < X:
-        num_2.append(i)
-
-for i in num_2:
-    print(i,end=" ")
+front = list()
+back = list()
+##main
+num = int(input())
+i = 0
+while i < num:
+    front_num, back_num = map(int,input().split())
+    if 0 >= front_num or front_num >= 10:
+        if 0 >= back_num or back_num >= 10:
+            continue
+    front.append(front_num)
+    back.append(back_num)
+    i = i + 1
+for i in range(0,num,1):
+    value = front[i] + back[i]
+    print(value)
