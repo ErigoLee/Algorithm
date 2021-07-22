@@ -1,50 +1,58 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
+#include <string>
+#include <queue>
+#include <stack>
 
 using namespace std;
 int main() {
 
-    int n;
-    vector<vector<int> > lotte;
-    vector<vector<int> > Com;
+    stack<string> string_stack;
+    queue<string> array_strings;
+    int count;
+    cin >> count;
 
-    while (true) {
-        cin >> n;
-        if (n == 0)
-            break;
-        vector<int> temp;
-        vector<int> temp2;
-        for (int i = 0; i < n; i++) {
-            int a;
-            cin >> a;
-            temp.push_back(a);
-            if (i < 6)
-                temp2.push_back(0);
-            else
-                temp2.push_back(1);
-        }
-        sort(temp2.begin(), temp2.end());
-        lotte.push_back(temp);
-        Com.push_back(temp2);
-        temp.clear();
-        temp2.clear();
+    for (int i = 0; i < count; i++)
+    {
+        string a;
+        cin >> a;
+        array_strings.push(a);
     }
-    int lsize = lotte.size();
-    for (int i = 0; i < lsize; i++) {
-        do {
-            int Csize = Com[i].size();
-            for (int j = 0; j < Csize; j++) {
-                if (Com[i][j] == 0)
-                    cout << lotte[i][j] << " ";
+
+    for (int i = 0; i < count; i++)
+    {
+        string b = array_strings.front();
+        array_strings.pop();
+        int length = b.length();
+        bool check = true;
+
+        for (int j = 0; j < length; j++)
+        {
+            if (b[j] == '(')
+                string_stack.push("(");
+
+            if (b[j] == ')')
+            {
+                if (string_stack.empty()) {
+                    check = false;
+                    break;
+                }
+                string_stack.pop();
             }
-            cout << endl;
+        }
+        if (!string_stack.empty() && check == true)
+            check = false;
 
-        } while (next_permutation(Com[i].begin(), Com[i].end()));
-        cout << endl;
+        if (!string_stack.empty())
+        {
+            while (!string_stack.empty())
+                string_stack.pop();
+        }
+
+        if (check)
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
     }
-
-
 
     return 0;
 }
