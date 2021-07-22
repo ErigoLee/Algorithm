@@ -1,76 +1,54 @@
 #include <iostream>
-#include <vector>
 #include <queue>
-#include <string>
-#include <algorithm>
-#define MAX 1000
-int N;
+#include <vector>
+#define N 100001
+#define INF 1000000007;
+
 using namespace std;
-int func(int start, int end, vector<pair<int, int>> node[MAX + 1]) {
-    int count = 2100000000;
-    int costs[MAX + 1];
-    if (start == end) return 0;
+vector<pair<int, int>> tree[N];
 
-    for (int i = 0; i < MAX + 1; i++)
-        costs[i] = 2100000000;
-    queue<pair<int, int>>qu;
-    pair<int, int> p = make_pair(start, 0);
-    qu.push(p);
-
-
-    while (!qu.empty()) {
-        int route_start = qu.front().first;
-        int cost = qu.front().second;
-
-        qu.pop();
-        int size = node[route_start].size();
-        for (int i = 0; i < size; i++) {
-            int next_route_start = node[route_start][i].first;
-            int next_cost = node[route_start][i].second + cost;
-            if (next_route_start == end) {
-                if (count > next_cost)
-                    count = next_cost;
-            }
-            else {
-                if (costs[next_route_start] > next_cost) {
-                    costs[next_route_start] = next_cost;
-                    pair<int, int>p2 = make_pair(next_route_start, next_cost);
-                    qu.push(p2);
-                }
-            }
+long long result;
+long long dep(int here, int before)
+{
+    int size = tree[here].size();
+    long long sum = 1;
+    for (int i = 0; i < size; i++)
+    {
+        int next_node = tree[here][i].first;
+        int next_weight = tree[here][i].second;
+        if (next_node != before)
+        {
+            long long check = dep(next_node, here) * next_weight % INF;
+            result = (result + check * sum) % INF;
+            sum = (sum + check) % INF;
         }
-
     }
-
-    return count;
+    return sum;
 }
 
 
 int main() {
-    vector<pair<int, int>> node[MAX + 1];
-    int count[MAX + 1];
-    int M, X;
-    int max = 0;
-    cin >> N >> M >> X;
 
-    for (int i = 0; i < M; i++) {
-        int num, num2, num3;
-        cin >> num >> num2 >> num3;
-        pair<int, int> p = make_pair(num2, num3);
-        node[num].push_back(p);
+    int node_count;
+    long long sum = 0;
+    cin >> node_count;
+    int a[N];
+    for (int i = 0; i < node_count - 1; i++)
+    {
+        int node_1, node_2, weight;
+        cin >> node_1 >> node_2 >> weight;
+
+        tree[node_1].push_back({ node_2,weight });
+        tree[node_2].push_back({ node_1,weight });
+        a[node_1]++;
+        a[node_2]++;
     }
 
-    for (int i = 1; i <= N; i++)
-        count[i] = func(i, X, node) + func(X, i, node);
 
-    for (int i = 1; i <= N; i++) {
-        if (max < count[i]) {
-            max = count[i];
-        }
-    }
 
-    cout << max << endl;
+    sum = dep(1, 0);
 
+    cout << result << endl;
 
     return 0;
 }
