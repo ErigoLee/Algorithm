@@ -1,9 +1,18 @@
+#value
+count = list()
 ##main
-while True:
-    num = int(input())
-    if 1 <= num and num <=10000:
-        break
-sum = 0
-for i in range(1,num+1,1):
-    sum=sum+i
-print(sum)
+num = int(input())
+for i in range(0,num,1):
+    sum = 0
+    count_2 = 1
+    quize = list(input())
+    for j in quize:
+        if j == 'O':
+            sum = sum+count_2
+            count_2 = count_2+1
+        else:
+            count_2 = 1
+    count.append(sum)
+
+for i in count:
+    print(i)
