@@ -1,18 +1,19 @@
-#value
-count = list()
-##main
-num = int(input())
-for i in range(0,num,1):
-    sum = 0
-    count_2 = 1
-    quize = list(input())
-    for j in quize:
-        if j == 'O':
-            sum = sum+count_2
-            count_2 = count_2+1
-        else:
-            count_2 = 1
-    count.append(sum)
+##function
+def compare_find(number):
+    if number>=90:
+        print('A')
+    elif number >= 80:
+        print('B')
+    elif number >= 70:
+        print('C')
+    elif number >= 60:
+        print('D')
+    else:
+        print('F')
 
-for i in count:
-    print(i)
+while True:
+    number = int(input())
+    if 0<= number and number <= 100:
+        break
+
+compare_find(number)
