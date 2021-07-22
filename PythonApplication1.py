@@ -1,16 +1,13 @@
-front = list()
-back = list()
-##main
-num = int(input())
-i = 0
-while i < num:
-    front_num, back_num = map(int,input().split())
-    if 0 >= front_num or front_num >= 10:
-        if 0 >= back_num or back_num >= 10:
+sum=list()
+while True:
+    try:
+        a, b =map(int,input().split())
+    except:
+        break
+    if 0>=a or a>=10:
+        if 0>=b or b>=10:
             continue
-    front.append(front_num)
-    back.append(back_num)
-    i = i + 1
-for i in range(0,num,1):
-    value = front[i] + back[i]
-    print(value)
+    sum.append(a+b)
+
+for i in sum:
+    print(i)
