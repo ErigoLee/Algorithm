@@ -1,17 +1,30 @@
-##value
-count = list()
-##main
-num1 = int(input())
-num2 = int(input())
-num3 = int(input())
-sum = num1*num2*num3
-sum_list = list(map(int,str(sum)))
+total_number = 0
+min_number = 100000
+##function
+def find(number):
+    global total_number
+    global  min_number
+    if number == 1:
+        return False
+    for i in range(number-1,1,-1):
+        if number % i == 0:
+            return
+    total_number = number + total_number
+    if min_number > number:
+        min_number = number
 
-for i in range(0,10,1):
-    count.append(0)
+while True:
+    T = int(input())
+    S = int(input())
+    if 0 < T and T <= 10000:
+        if 0 < S and S <= 10000:
+            break
 
-for i in sum_list:
-    count[i] = count[i]+1
+for i in range(T,S+1,1):
+    find(i)
 
-for i in count:
-    print(i)
+if total_number == 0:
+    print(-1)
+else:
+    print(total_number)
+    print(min_number)
