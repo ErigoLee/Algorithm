@@ -1,18 +1,39 @@
-def route_Hanoi(N, from_H, by_H, to_H):
-    if N==1:
-        print("%d %d"%(from_H,to_H))
+triangle = list()
+def max(a,b):
+    if a>=b:
+        return a
     else:
-        route_Hanoi(N-1,from_H,to_H,by_H)
-        print("%d %d"%(from_H,to_H))
-        route_Hanoi(N-1,by_H,from_H,to_H)
+        return b
 
-N = 0
-while(1):
-    N = int(input())
-    if 1<=N and N<=100:
-        break
 
-transform_count = 2**N-1
-print("%d" %transform_count)
-if N<=20:
-    route_Hanoi(N,1,2,3)
+def solution(triangle):
+    num = len(triangle)
+    for i in range(0,num,1):
+        num2 = len(triangle[i])
+        if num2>1:
+            for j in range(0,num2,1):
+                if j == 0:
+                    triangle[i][j] += triangle[i-1][j]
+                elif j == i:
+                    triangle[i][j] += triangle[i-1][j-1]
+                else:
+                    num_max = max(triangle[i-1][j-1],triangle[i-1][j])
+                    triangle[i][j] +=num_max
+
+    maximum = triangle[num-1][0]
+    num3 = len(triangle[num-1])
+    for i in range(1,num3,1):
+        if maximum < triangle[num-1][i]:
+            maximum = triangle[num-1][i]
+
+    return maximum
+
+##main##
+num=int(input())
+for i in range(0,num,1):
+    a = list(map(int,input().split()))
+    triangle.append(a)
+    a=[]
+
+answer = solution(triangle)
+print(answer)
