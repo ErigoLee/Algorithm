@@ -1,58 +1,30 @@
 #include <iostream>
-#include <string>
-#include <queue>
-#include <stack>
+#include <vector>
 
 using namespace std;
-int main() {
 
-    stack<string> string_stack;
-    queue<string> array_strings;
+int main() {
     int count;
+    int memo[11];
+    vector<int> T;
     cin >> count;
 
-    for (int i = 0; i < count; i++)
-    {
-        string a;
-        cin >> a;
-        array_strings.push(a);
+    for (size_t i = 0; i < count; i++) {
+        int num;
+        cin >> num;
+        T.push_back(num);
     }
 
-    for (int i = 0; i < count; i++)
-    {
-        string b = array_strings.front();
-        array_strings.pop();
-        int length = b.length();
-        bool check = true;
+    memo[1] = 1;
+    memo[2] = 2;
+    memo[3] = 4;
+    for (size_t i = 4; i < 11; i++)
+        memo[i] = memo[i - 1] + memo[i - 2] + memo[i - 3];
 
-        for (int j = 0; j < length; j++)
-        {
-            if (b[j] == '(')
-                string_stack.push("(");
-
-            if (b[j] == ')')
-            {
-                if (string_stack.empty()) {
-                    check = false;
-                    break;
-                }
-                string_stack.pop();
-            }
-        }
-        if (!string_stack.empty() && check == true)
-            check = false;
-
-        if (!string_stack.empty())
-        {
-            while (!string_stack.empty())
-                string_stack.pop();
-        }
-
-        if (check)
-            cout << "YES" << endl;
-        else
-            cout << "NO" << endl;
+    for (size_t i = 0; i < count; i++) {
+        cout << memo[T[i]] << endl;
     }
+
 
     return 0;
 }
