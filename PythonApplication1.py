@@ -4,4 +4,4 @@ while(True):
         if 0 < b and b < 10:
             break
 
-print(s-b)
+print(s/b)
