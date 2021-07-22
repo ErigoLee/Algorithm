@@ -1,13 +1,10 @@
 sum=list()
 while True:
-    try:
-        a, b =map(int,input().split())
-    except:
+    a, b = map(int,input().split())
+    if a==0 and b==0:
         break
-    if 0>=a or a>=10:
-        if 0>=b or b>=10:
-            continue
-    sum.append(a+b)
+    sum_num=a+b
+    sum.append(sum_num)
 
 for i in sum:
     print(i)
