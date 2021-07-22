@@ -3,5 +3,6 @@ while True:
     if 1<= N and N <= 100:
         break
 star='*'
+temp=' '
 for i in range(1,N+1,1):
-    print(star*i)
+    print("%s%s"%(temp*(N-i),star*i))
