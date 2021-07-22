@@ -6,7 +6,7 @@ min = 1000000000  ##최솟값
 include = []
 
 
-##함수
+##함수1
 def powerSet(k):
     T = []
     if k == N:
@@ -49,15 +49,15 @@ while (j<N):
 
     S.append(s)
     B.append(b)
-    j = j+1
+    j =  j+1
 
 for i in range(0, N, 1):
     include.append(True)
 ##여러 재료가 나오는 경우의 수
 powerSet(0)
+
 ##신맛과 짠맛 차이 구하기
-T = len(N_set)
-for i in range(1, T, 1):
+for i in range(1, 2**N, 1):
     total_s = 1  ##신맛
     total_b = 0  ##짠맛
     diff = 0  ##차이값
