@@ -1,28 +1,15 @@
-##function
-def compare_find(num1,num2,num3):
-    if num1 > num2:
-        if num2 > num3:
-            print(num2)
-        else:
-            if num3 > num1:
-                print(num1)
-            else:
-                print(num3)
-    else:
-        if num1 > num3:
-            print(num1)
-        else:
-            if num3>num2:
-                print(num2)
-            else:
-                print(num3)
-
+##value
+min = 1000000
+max =  -1000000
+a = list()
 ##main
-while True:
-    num1,num2,num3 = map(int,input().split())
-    if 1<= num1 and num1 <= 100:
-        if 1<=num2 and num2 <= 100:
-            if 1<=num3 and num3 <=100:
-                break
+N =int(input())
+a = list(map(int,input().split()))
 
-compare_find(num1,num2,num3)
+for i in a:
+    if min > i:
+        min = i
+    if max < i:
+        max = i
+
+print("%d %d"%(min,max))
