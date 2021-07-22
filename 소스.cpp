@@ -1,58 +1,58 @@
 #include <iostream>
-#include <string>
-
 using namespace std;
-string answer = "";
-int num;
-bool func2(string check_str)
+int storage[501][20]; // 메모화 재귀 표현
+int title(int N, int bits)
 {
-    if (check_str.size() == 1)
-        return true;
-    int length = check_str.length();
+    int result = 0;
+    if (N <= 0) return 0;
+    if (N == 1 && bits == 6) return 0;
+    if (N == 1) return 1;
+    if (storage[N][bits]) return storage[N][bits];
 
-    for (int i = 1; i <= length / 2; i++)
+    switch (bits)
     {
-        for (int j = 0; j < length - i; j++)
-        {
-            if (check_str.substr(j, i) == check_str.substr(j + i, i))
-                return false;
-        }
+    case 0:
+        result = title(N - 1, 0) + title(N - 1, 3) + title(N - 1, 9) + title(N - 1, 12) + title(N - 1, 15);
+        break;
+    case 3:
+        result = title(N - 1, 0) + title(N - 1, 12);
+        break;
+    case 6:
+        result = title(N - 1, 9);
+        break;
+    case 9:
+        result = title(N - 1, 0) + title(N - 1, 6);
+        break;
+    case 12:
+        result = title(N - 1, 0) + title(N - 1, 3);
+        break;
+    case 15:
+        result = title(N - 1, 0);
+        break;
     }
-
-    return true;
+    storage[N][bits] = result;
+    return result;
 }
-
-void func1(string check, int cnt)
-{
-    if (num == cnt)
-    {
-        answer = check;
-        cout << answer;
-        exit(0);
-        return;
-    }
-
-    string checked_str = "";
-    for (int i = 1; i <= 3; i++)
-    {
-        checked_str = check + to_string(i);
-
-        if (func2(checked_str)) {
-            func1(checked_str, cnt + 1);
-        }
-    }
-
-}
-
 
 
 int main() {
 
+    int testcase;
+    cin >> testcase;
 
-    cin >> num;
+    int results[1001];
 
-    func1("", 0);
+    for (int i = 0; i < testcase; i++)
+    {
+        int N;
+        cin >> N;
+        results[i] = title(N, 0);
+    }
 
+    for (int i = 0; i < testcase; i++)
+    {
+        cout << results[i] << endl;
+    }
 
     return 0;
 }
