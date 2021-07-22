@@ -1,0 +1,7 @@
+﻿  소스.c
+C:\Users\이다연\source\repos\Project16\소스.c(55,20): warning C4244: '=': 'double'에서 'long'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\이다연\source\repos\Project16\소스.c(54,3): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\이다연\source\repos\Project16\소스.c(56,3): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\이다연\source\repos\Project16\소스.c(57,3): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\이다연\source\repos\Project16\소스.c(43): warning C4715: 'count_function': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  Project16.vcxproj -> C:\Users\이다연\source\repos\Project16\Debug\Project16.exe
