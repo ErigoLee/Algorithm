@@ -1,15 +1,11 @@
-##value
-min = 1000000
-max =  -1000000
-a = list()
-##main
-N =int(input())
-a = list(map(int,input().split()))
+while(True):
+    s, b = map(int, input().split())
+    if 0 < s and s <= 10000:
+        if 0 < b and b <= 10000:
+            break
 
-for i in a:
-    if min > i:
-        min = i
-    if max < i:
-        max = i
-
-print("%d %d"%(min,max))
+print(s+b)
+print(s-b)
+print(s*b)
+print(s//b)
+print(s%b)
