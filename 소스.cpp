@@ -3,148 +3,71 @@
 #include <queue>
 #include <string>
 #include <algorithm>
-#define N 100
-#define M 100000000
-//int space[N][N];
-//int space2[N][N];
-int visited[N][N];
-int visited2[N][N];
+#define MAX 10000
+#define INF 2100000000
+int costs[MAX + 1];
 using namespace std;
+void func(int start, vector<pair<int, int>> node[MAX + 1]) {
 
-void func(int x, int y, bool check, int count, int num, vector<string> Value) {
-
-    queue<pair<int, int>> qu;
-    pair<int, int> p = make_pair(x, y);
+    for (int i = 0; i < MAX + 1; i++)
+        costs[i] = INF;
+    queue<pair<int, int>>qu;
+    pair<int, int> p = make_pair(start, 0);
+    costs[start] = 0;
     qu.push(p);
-    visited[x][y] = true;
-    //space[x][y] = count;
+
 
     while (!qu.empty()) {
-        int first = qu.front().first;
-        int second = qu.front().second;
+        int route_start = qu.front().first;
+        int cost = qu.front().second;
+
         qu.pop();
-        int next_1, next_2;
-        bool check2 = false;
-        for (int i = 0; i < 4; i++) {
-
-            switch (i) {
-            case 0:
-                if (first - 1 >= 0) {
-                    next_1 = first - 1;
-                    next_2 = second;
-                    check2 = true;
-                }
-                break;
-            case 1:
-                if (second - 1 >= 0) {
-                    next_1 = first;
-                    next_2 = second - 1;
-                    check2 = true;
-                }
-                break;
-            case 2:
-                if (first + 1 < num) {
-                    next_1 = first + 1;
-                    next_2 = second;
-                    check2 = true;
-
-                }
-                break;
-            case 3:
-                if (second + 1 < num) {
-                    next_1 = first;
-                    next_2 = second + 1;
-                    check2 = true;
-                }
-                break;
+        int size = node[route_start].size();
+        for (int i = 0; i < size; i++) {
+            int next_route_start = node[route_start][i].first;
+            int next_cost = node[route_start][i].second + cost;
+            if (costs[next_route_start] > next_cost) {
+                costs[next_route_start] = next_cost;
+                pair<int, int>p2 = make_pair(next_route_start, next_cost);
+                qu.push(p2);
             }
-            if (check2 == true && check == true) {
-                if (Value[next_1][next_2] == Value[first][second] && visited[next_1][next_2] == false) {
-                    visited[next_1][next_2] = true;
-                    //space[next_1][next_2] = count;
-                    pair<int, int> p2 = make_pair(next_1, next_2);
-                    qu.push(p2);
-                }
-                check2 = false;
-            }
-            else if (check2 == true && check == false) {
-                if (Value[next_1][next_2] == Value[first][second] && visited2[next_1][next_2] == false) {
-                    visited2[next_1][next_2] = true;
-                    //space2[next_1][next_2] = count;
-                    pair<int, int> p2 = make_pair(next_1, next_2);
-                    qu.push(p2);
-                }
-                else {
-                    if ((Value[next_1][next_2] == 'G' && Value[first][second] == 'R') || (Value[next_1][next_2] == 'R' && Value[first][second] == 'G')) {
-                        if (visited2[next_1][next_2] == false) {
-                            visited2[next_1][next_2] = true;
-                            //space2[next_1][next_2] = count;
-                            pair<int, int> p2 = make_pair(next_1, next_2);
-                            qu.push(p2);
-                        }
-                    }
-                }
-                check2 = false;
-            }
-            else
-                continue;
         }
     }
 }
 
+
 int main() {
-    int num;
-    vector<string> Value;
-    cin >> num;
-    for (int i = 0; i < num; i++) {
-        string grap;
-        cin >> grap;
-        Value.push_back(grap);
-    }
+    int incident;
+    vector <pair<int, int>> incidents;
+    vector <pair<int, int>> comp[MAX + 1];
+    cin >> incident;
 
-    for (int i = 0; i < num; i++) {
-        for (int j = 0; j < num; j++) {
-            visited[i][j] = false;
-            visited2[i][j] = false;
-            //space[i][j] = M;
-            //space2[i][j] = M;
+    for (int i = 0; i < incident; i++) {
+        int comp_count, line, hacking;
+        cin >> comp_count >> line >> hacking;
+        for (int j = 0; j < line; j++) {
+            int node_1, node_2, time;
+            cin >> node_1 >> node_2 >> time;
+            pair<int, int> p = make_pair(node_1, time);
+            comp[node_2].push_back(p);
         }
-    }
-
-    int num2 = 1;
-    for (int i = 0; i < num; i++) {
-        for (int j = 0; j < num; j++) {
-            if (visited[i][j] == false) {
-                func(i, j, true, num2, num, Value);
-                num2++;
+        func(hacking, comp);
+        int count = 0, max = 0;
+        for (int j = 1; j <= comp_count; j++) {
+            if (costs[j] < INF) {
+                count++;
+                if (max < costs[j]) max = costs[j];
             }
         }
+        pair<int, int> p2 = make_pair(count, max);
+        incidents.push_back(p2);
+        for (int j = 1; j <= comp_count; j++) comp[j].clear();
     }
-    int num3 = 1;
-    for (int i = 0; i < num; i++) {
-        for (int j = 0; j < num; j++) {
-            if (visited2[i][j] == false) {
-                func(i, j, false, num3, num, Value);
-                num3++;
-            }
-        }
+
+    int size = incidents.size();
+    for (int i = 0; i < size; i++) {
+        cout << incidents[i].first << " " << incidents[i].second << endl;
     }
-    /*
-    for (int i = 0; i < num; i++) {
-        for (int j = 0; j < num; j++) {
-            cout << space[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-    for (int i = 0; i < num; i++) {
-        for (int j = 0; j < num; j++) {
-            cout << space2[i][j] << " ";
-        }
-        cout << endl;
-    }
-    */
-    cout << --num2 << " " << --num3 << endl;
 
     return 0;
 }
