@@ -1,16 +1,16 @@
-num = int(input())
-num2=num
-b = 1
-while True:
-    if num2 < 10:
-        t = 0
-        s = num2
+##function
+def compare_find(number_1,number_2):
+    if number_1 > number_2:
+        print('>')
+    elif number_1 < number_2:
+        print('<')
     else:
-        t = num2//10
-        s = num2%10
-    temp = (t+s)%10
-    num2 = s*10 + temp
-    if num2 == num:
-        break
-    b = b+1
-print(b)
+        print('==')
+
+while True:
+    T, S = map(int,input().split())
+    if -10000 < T and T <= 10000:
+        if -10000 < S and S <= 10000:
+            break
+
+compare_find(T,S)
