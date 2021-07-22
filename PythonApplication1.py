@@ -1,13 +1,18 @@
-max = 0
-##main
-num = int(input())
-a = list(map(int,input().split()))
-sum = 0
-for i in a:
-    if max < i:
-        max = i
-for i in range(0,num,1):
-    a[i] = a[i]/max * 100
-for i in a:
-    sum = sum + i
-print("%0.2f"%(sum/num))
+def route_Hanoi(N, from_H, by_H, to_H):
+    if N==1:
+        print("%d %d"%(from_H,to_H))
+    else:
+        route_Hanoi(N-1,from_H,to_H,by_H)
+        print("%d %d"%(from_H,to_H))
+        route_Hanoi(N-1,by_H,from_H,to_H)
+
+N = 0
+while(1):
+    N = int(input())
+    if 1<=N and N<=100:
+        break
+
+transform_count = 2**N-1
+print("%d" %transform_count)
+if N<=20:
+    route_Hanoi(N,1,2,3)
