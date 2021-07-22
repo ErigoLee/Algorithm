@@ -21,7 +21,7 @@ int main() {
     for (int i = 4; i < 11; i++)
         memo[i] = memo[i - 1] + memo[i - 2] + memo[i - 3];
 
-    for (size_t i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++) {
         cout << memo[T[i]] << endl;
     }
 
