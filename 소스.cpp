@@ -1,33 +1,36 @@
 #include <iostream>
 
 using namespace std;
-int fibo[21];
 
-int fibofun(int num) {
-    if (fibo[num]) {
-        return fibo[num];
-    }
+int title[1001];
+static int divide_num = 10007;
 
-    if (num == 0)
-        return 0;
-    else if (num == 1)
+int titling(int num)
+{
+    if (title[num])
+        return title[num];
+
+    if (num == 1)
         return 1;
+    else if (num == 2)
+        return 2;
     else {
-        int a = fibofun(num - 1) + fibofun(num - 2);
-        fibo[num] = a;
-        return fibo[num];
+        int a = titling(num - 1) + titling(num - 2);
+        title[num] = a % divide_num;
+        return title[num];
     }
-}
 
+}
 
 
 int main() {
 
+
     int num;
+
     cin >> num;
 
-    int answer = fibofun(num);
-
+    int answer = titling(num);
     cout << answer << endl;
 
     return 0;
