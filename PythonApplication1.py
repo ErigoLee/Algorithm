@@ -1,18 +1,25 @@
-##function
-def find_click(hour,min):
-    if min>=45:
-        min=min-45
-        print(hour,min)
-    else:
-        if hour == 0:
-            hour = 23
-            min = min +60-45
-            print(hour,min)
-        else:
-            hour = hour -1
-            min = min + 60 -45
-            print(hour, min)
+##funtion
+def sort_work(arr):
+    arr_len = len(arr)
+    i=0
+    while i < arr_len-1:
+        if arr[i]>arr[i+1]:
+            temp = arr[i]
+            arr[i] = arr[i+1]
+            arr[i+1] = temp
+            for j in arr:
+                print(j,end=" ")
+            print()
+        i=i+1
+
+    index = 0
+    for i in range(0,arr_len-1,1):
+        if arr[i]>arr[i+1]:
+            index=1
+
+    if index==1:
+        sort_work(arr)
 
 ##main
-hour, min = map(int,input().split())
-find_click(hour,min)
+arr = list(map(int,input().split()))
+sort_work(arr)
