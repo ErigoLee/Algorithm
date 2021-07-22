@@ -1,53 +1,72 @@
 #include <iostream>
 #include <vector>
+#include <queue>
+#include <string>
+#include <algorithm>
+#define MAX 1000
+#define INF 2100000000
+
 using namespace std;
-int fibo[41][2];
+int func(int start, int end, vector<pair<int, int>> node[MAX + 1]) {
 
-void fibofun(int n)
-{
-    if (n == 0)
-    {
-        fibo[0][0] = 1;
-        fibo[0][1] = 0;
-        return;
+    int costs[MAX + 1];
+    if (start == end) return 0;
+
+    for (int i = 0; i < MAX + 1; i++)
+        costs[i] = INF;
+    queue<pair<int, int>>qu;
+    pair<int, int> p = make_pair(start, 0);
+    qu.push(p);
+
+
+    while (!qu.empty()) {
+        int route_start = qu.front().first;
+        int cost = qu.front().second;
+
+        qu.pop();
+        int size = node[route_start].size();
+        for (int i = 0; i < size; i++) {
+            int next_route_start = node[route_start][i].first;
+            int next_cost = node[route_start][i].second + cost;
+            if (costs[next_route_start] > next_cost) {
+                costs[next_route_start] = next_cost;
+                pair<int, int>p2 = make_pair(next_route_start, next_cost);
+                qu.push(p2);
+            }
+
+        }
+
     }
 
-    if (n == 1)
-    {
-        fibo[1][0] = 0;
-        fibo[1][1] = 1;
-        return;
-    }
-
-    if (fibo[n][0] != 0 && fibo[n][1] != 0)
-        return;
-
-    if (fibo[n - 1][0] == 0 && fibo[n - 1][1] == 0)
-        fibofun(n - 1);
-    if (fibo[n - 2][0] == 0 && fibo[n - 2][1] == 0)
-        fibofun(n - 2);
-
-    fibo[n][0] = fibo[n - 1][0] + fibo[n - 2][0];
-    fibo[n][1] = fibo[n - 1][1] + fibo[n - 2][1];
+    return costs[end];
 }
 
 
 int main() {
-    int T;
-    vector<pair<int, int>> answer;
-    cin >> T;
+    vector<pair<int, int>> node[MAX + 1];
+    int count[MAX + 1];
+    int N, M, X;
+    int max = 0;
+    cin >> N >> M >> X;
 
-    for (int i = 0; i < T; i++)
-    {
-        int num;
-        cin >> num;
-        fibofun(num);
-        answer.push_back({ fibo[num][0],fibo[num][1] });
+    for (int i = 0; i < M; i++) {
+        int num, num2, num3;
+        cin >> num >> num2 >> num3;
+        pair<int, int> p = make_pair(num2, num3);
+        node[num].push_back(p);
     }
 
-    for (int i = 0; i < T; i++)
-    {
-        cout << answer[i].first << " " << answer[i].second << endl;
+    for (int i = 1; i <= N; i++) {
+        count[i] = func(i, X, node) + func(X, i, node);
+    }
+    for (int i = 1; i <= N; i++) {
+        if (max < count[i] && count[i] < INF) {
+            max = count[i];
+        }
     }
 
+    cout << max << endl;
+
+
+    return 0;
 }
