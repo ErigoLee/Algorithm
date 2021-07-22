@@ -1,72 +1,50 @@
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <algorithm>
 
-#define MaxN 20000
-
 using namespace std;
-int node_route[MaxN + 1];
-bool visited[MaxN + 1];
-
-
 int main() {
 
-    int n, m; //n: 노드 수, m: 엣지 수
-    int result_node = 0, distance = 0, same_count = 0;
+    int n;
+    vector<vector<int> > lotte;
+    vector<vector<int> > Com;
 
-
-    cin >> n >> m;
-    vector<int> route[MaxN + 1];
-    //각 노드별 연결 되는 노드를 push함
-    for (int i = 0; i < m; i++) {
-        int a[2];
-        for (int j = 0; j < 2; j++)
-            cin >> a[j];
-
-        route[a[0]].push_back(a[1]);
-        route[a[1]].push_back(a[0]);
+    while (true) {
+        cin >> n;
+        if (n == 0)
+            break;
+        vector<int> temp;
+        vector<int> temp2;
+        for (int i = 0; i < n; i++) {
+            int a;
+            cin >> a;
+            temp.push_back(a);
+            if (i < 6)
+                temp2.push_back(0);
+            else
+                temp2.push_back(1);
+        }
+        sort(temp2.begin(), temp2.end());
+        lotte.push_back(temp);
+        Com.push_back(temp2);
+        temp.clear();
+        temp2.clear();
     }
-
-    for (int i = 1; i <= n; i++) visited[i] = false;
-
-    queue<pair<int, int> >qu;
-
-    pair<int, int> p = make_pair(0, 1);
-    qu.push(p);
-    visited[1] = true;
-    node_route[1] = 0;
-
-    while (!qu.empty()) {
-        int dist = qu.front().first;
-        int here = qu.front().second;
-
-        qu.pop();
-        int rsize = route[here].size();
-        for (int i = 0; i < rsize; i++) {
-            int next = route[here][i];
-            if (visited[next] == false) {
-                node_route[next] = dist + 1;
-                pair<int, int> p2 = make_pair(node_route[next], next);
-                qu.push(p2);
-                visited[next] = true;
+    int lsize = lotte.size();
+    for (int i = 0; i < lsize; i++) {
+        do {
+            int Csize = Com[i].size();
+            for (int j = 0; j < Csize; j++) {
+                if (Com[i][j] == 0)
+                    cout << lotte[i][j] << " ";
             }
-        }
+            cout << endl;
 
+        } while (next_permutation(Com[i].begin(), Com[i].end()));
+        cout << endl;
     }
 
 
-    for (int i = 1; i <= n; i++) {
-        if (distance < node_route[i]) {
-            distance = node_route[i];
-            same_count = 0;
-            result_node = i;
-        }
-        if (distance == node_route[i])
-            same_count++;
-    }
-
-    cout << result_node << " " << distance << " " << same_count << endl;
 
     return 0;
 }
