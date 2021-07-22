@@ -1,3 +1,5 @@
 ﻿  소스.c
-C:\Users\이다연\source\repos\Project16\소스.c(84,12): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\이다연\source\repos\Project16\소스.c(3,24): warning C4244: '초기화 중': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\이다연\source\repos\Project16\소스.c(8,5): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\이다연\source\repos\Project16\소스.c(9,5): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   Project16.vcxproj -> C:\Users\이다연\source\repos\Project16\Debug\Project16.exe
