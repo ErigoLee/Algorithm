@@ -1,30 +1,33 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 int main() {
     int count;
-    int memo[11];
-    vector<int> T;
+    vector<int> tree;
+    int max = 0;
+
     cin >> count;
 
-    for (int i = 0; i < count; i++) {
-        int num;
-        cin >> num;
-        T.push_back(num);
+    for (int i = 0; i < count; i++)
+    {
+        int a;
+        cin >> a;
+        tree.push_back(a);
     }
 
-    memo[1] = 1;
-    memo[2] = 2;
-    memo[3] = 4;
-    for (int i = 4; i < 11; i++)
-        memo[i] = memo[i - 1] + memo[i - 2] + memo[i - 3];
+    sort(tree.begin(), tree.end());
 
-    for (int i = 0; i < count; i++) {
-        cout << memo[T[i]] << endl;
+    for (int i = 0; i < count; i++)
+    {
+        int num = tree[count - (i + 1)] + (i + 1);
+        if (num > max)
+            max = num;
     }
 
+    cout << max + 1 << endl;
 
     return 0;
 }
