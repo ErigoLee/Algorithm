@@ -1,18 +1,17 @@
-a = 0
-b = 0
-temp = 0
-max = 0
-num = list()
-while True:
-    try:
-        n = int(input())
-        num.append(n)
-        if max < n:
-            max = n
-            b = a+1
-        a = a + 1
-    except:
-        break
-num.sort()
-print(num[len(num)-1])
-print(b)
+##value
+count = list()
+##main
+num1 = int(input())
+num2 = int(input())
+num3 = int(input())
+sum = num1*num2*num3
+sum_list = list(map(int,str(sum)))
+
+for i in range(0,10,1):
+    count.append(0)
+
+for i in sum_list:
+    count[i] = count[i]+1
+
+for i in count:
+    print(i)
