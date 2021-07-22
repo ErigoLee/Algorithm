@@ -1,66 +1,61 @@
 #include <iostream>
 using namespace std;
-int stickers[2][100001];
-int dp[2][100001];
+int chess[15];
+int N;
+int num;
 
-
-int MAX(int a, int b)
+int abs(int a, int b)
 {
     if (a >= b)
-        return a;
+        return a - b;
     else
-        return b;
+        return b - a;
 }
+
+bool possible(int present)
+{
+    for (int i = 0; i < present; i++)
+    {
+        if (chess[i] == chess[present] || present - i == abs(chess[present], chess[i]))
+            return false;
+    }
+    return true;
+}
+
+
+void queue_count(int present)
+{
+
+    if (N == present)
+    {
+        num++;
+        return;
+    }
+
+    for (int i = 0; i < N; i++)
+    {
+        chess[present] = i;
+        if (possible(present))
+        {
+            queue_count(present + 1);
+        }
+
+    }
+
+
+}
+
+
 
 int main() {
 
-    int sticker_case;
-    int sum;
 
-    cin >> sticker_case;
-
-    for (int i = 0; i < sticker_case; i++)
-    {
-
-        int N;
-        cin >> N;
-
-        for (int j = 0; j < 2; j++)
-        {
-            for (int k = 1; k <= N; k++)
-            {
-                int a;
-                cin >> a;
-                stickers[j][k] = a;
-            }
-        }
-        dp[0][0] = 0;
-        dp[1][0] = 0;
-        dp[0][1] = stickers[0][1];
-        dp[1][1] = stickers[1][1];
+    cin >> N;
 
 
-        for (int j = 2; j <= N; j++)
-        {
+    queue_count(0);
 
-            dp[0][j] = MAX(dp[1][j - 1], dp[0][j - 2]) + stickers[0][j];
-            dp[0][j] = MAX(dp[0][j], dp[1][j - 2] + stickers[0][j]);
-
-            dp[1][j] = MAX(dp[0][j - 1], dp[0][j - 2]) + stickers[1][j];
-            dp[1][j] = MAX(dp[1][j], dp[1][j - 2] + stickers[1][j]);
-
-        }
-
-        if (dp[0][N] >= dp[1][N])
-            sum = dp[0][N];
-        else
-            sum = dp[1][N];
-
-        cout << sum << endl;
-        sum = 0;
-        for (int j = 1; j <= N; j++) dp[1][j] = dp[0][j] = 0;
-
-    }
+    cout << num << endl;
 
     return 0;
 }
