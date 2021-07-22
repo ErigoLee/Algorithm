@@ -1,14 +1,28 @@
-while(True):
-    s, b, t = map(int, input().split())
-    if 2 <= s and s <= 10000:
-        if 2 <= b and b <= 10000:
-            if 2 <= t and t <= 10000:
+##function
+def compare_find(num1,num2,num3):
+    if num1 > num2:
+        if num2 > num3:
+            print(num2)
+        else:
+            if num3 > num1:
+                print(num1)
+            else:
+                print(num3)
+    else:
+        if num1 > num3:
+            print(num1)
+        else:
+            if num3>num2:
+                print(num2)
+            else:
+                print(num3)
+
+##main
+while True:
+    num1,num2,num3 = map(int,input().split())
+    if 1<= num1 and num1 <= 100:
+        if 1<=num2 and num2 <= 100:
+            if 1<=num3 and num3 <=100:
                 break
-M = (s+b)%t
-print(M)
-N = (s%t + b%t)%t
-print(N)
-L = (s*b)%t
-print(L)
-K = (s%t * b%t)%t
-print(K)
+
+compare_find(num1,num2,num3)
