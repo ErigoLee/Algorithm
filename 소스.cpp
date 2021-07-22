@@ -1,72 +1,72 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-using namespace std;
+#include <algorithm>
 
-struct Pos
-{
-    int x;
-    int y;
-};
+#define MaxN 20000
+
+using namespace std;
+int node_route[MaxN + 1];
+bool visited[MaxN + 1];
+
 
 int main() {
-    int test_case, count = 1;
-    vector<int> results;
-    cin >> test_case;
 
-    while (test_case != 0)
-    {
-        int n = test_case;
-        int cave[125][125], obstacles[125][125];
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                cin >> cave[i][j];
-                obstacles[i][j] = 999999;
-            }
-        }
-        obstacles[0][0] = cave[0][0];
+    int n, m; //n: 노드 수, m: 엣지 수
+    int result_node = 0, distance = 0, same_count = 0;
 
-        int rx[4] = { 1, 0, -1, 0 };
-        int ry[4] = { 0, 1, 0, -1 };
 
-        queue <Pos> q;
-        Pos a = { 0, 0 };
-        q.push(a);
-        while (!q.empty())
-        {
-            Pos npos = q.front();
-            q.pop();
+    cin >> n >> m;
+    vector<int> route[MaxN + 1];
+    //각 노드별 연결 되는 노드를 push함
+    for (int i = 0; i < m; i++) {
+        int a[2];
+        for (int j = 0; j < 2; j++)
+            cin >> a[j];
 
-            for (int i = 0; i < 4; i++)
-            {
-                int nx = npos.x + rx[i];
-                int ny = npos.y + ry[i];
-                if (nx < 0 || ny < 0 || nx >= n || ny >= n)
-                    continue;
-
-                if (obstacles[nx][ny] > obstacles[npos.x][npos.y] + cave[nx][ny])
-                {
-                    obstacles[nx][ny] = obstacles[npos.x][npos.y] + cave[nx][ny];
-                    Pos nnpos = { nx, ny };
-                    q.push(nnpos);
-                }
-
-            }
-        }
-        results.push_back(obstacles[n - 1][n - 1]);
-
-        cin >> test_case;
+        route[a[0]].push_back(a[1]);
+        route[a[1]].push_back(a[0]);
     }
 
-    int size = results.size();
+    for (int i = 1; i <= n; i++) visited[i] = false;
 
-    for (int i = 0; i < size; i++)
-    {
-        cout << "Problem " << i + 1 << ": " << results[i] << endl;
+    queue<pair<int, int> >qu;
+
+    pair<int, int> p = make_pair(0, 1);
+    qu.push(p);
+    visited[1] = true;
+    node_route[1] = 0;
+
+    while (!qu.empty()) {
+        int dist = qu.front().first;
+        int here = qu.front().second;
+
+        qu.pop();
+        int rsize = route[here].size();
+        for (int i = 0; i < rsize; i++) {
+            int next = route[here][i];
+            if (visited[next] == false) {
+                node_route[next] = dist + 1;
+                pair<int, int> p2 = make_pair(node_route[next], next);
+                qu.push(p2);
+                visited[next] = true;
+            }
+        }
+
     }
 
+
+    for (int i = 1; i <= n; i++) {
+        if (distance < node_route[i]) {
+            distance = node_route[i];
+            same_count = 0;
+            result_node = i;
+        }
+        if (distance == node_route[i])
+            same_count++;
+    }
+
+    cout << result_node << " " << distance << " " << same_count << endl;
 
     return 0;
 }
