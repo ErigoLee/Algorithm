@@ -1,33 +1,65 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
-
 using namespace std;
 
 int main() {
     int count;
-    vector<int> tree;
-    int max = 0;
+
+    string sol[100];
 
     cin >> count;
 
     for (int i = 0; i < count; i++)
     {
-        int a;
-        cin >> a;
-        tree.push_back(a);
-    }
+        string public_key[1001];
+        string public_key2[1001];
+        string cipher[1001];
+        int solution[1001];
+        int count2;
+        cin >> count2;
+        for (int j = 0; j < count2; j++)
+        {
+            string a;
+            cin >> a;
+            public_key[j] = a;
+        }
+        for (int j = 0; j < count2; j++)
+        {
+            string a;
+            cin >> a;
+            public_key2[j] = a;
+        }
 
-    sort(tree.begin(), tree.end());
+
+        for (int j = 0; j < count2; j++)
+        {
+            for (int k = 0; k < count2; k++)
+            {
+                if (public_key[j].compare(public_key2[k]) == 0)
+                {
+                    solution[j] = k;
+                    break;
+                }
+            }
+        }
+
+        for (int j = 0; j < count2; j++)
+        {
+            string a;
+            cin >> a;
+            cipher[j] = a;
+        }
+        sol[i] = "";
+        for (int j = 0; j < count2; j++)
+        {
+            sol[i] += (cipher[solution[j]] + " ");
+        }
+
+    }
 
     for (int i = 0; i < count; i++)
     {
-        int num = tree[count - (i + 1)] + (i + 1);
-        if (num > max)
-            max = num;
+        cout << sol[i] << endl;
     }
-
-    cout << max + 1 << endl;
 
     return 0;
 }
