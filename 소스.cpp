@@ -14,11 +14,11 @@ int main() {
     for (int i = 0; i <= num; i++) {
         for (int j = 0; j <= num2; j++) {
             if (i * j > 1)
-                memo[i][j] = ((memo[i - 1][j] % mod) + (memo[i][j - 1] % mod) + (memo[i - 1][j - 1] % mod)) % mod;
+                memo[i][j] = ((memo[i - 1][j]) + (memo[i][j - 1]) + (memo[i - 1][j - 1])) % mod;
         }
     }
 
-    cout << memo[num][num2] % mod << endl;
+    cout << memo[num][num2] << endl;
 
     return 0;
 }
