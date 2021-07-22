@@ -1,73 +1,32 @@
-N = 0  ##재료 갯수
-S = []  ##신맛
-B = []  ##쓴맛
-N_set = []
-min = 1000000000  ##최솟값
-include = []
+check_ring = list()
+##유클리드 호제법
+def fun1(i,j):
+    while i%j!=0:
+        k = i % j
+        i = j
+        j = k
+    return j
 
+def fun2(a,b):
 
-##함수1
-def powerSet(k):
-    T = []
-    if k == N:
-        for i in range(0, N, 1):
-            if (include[i]):
-                T.append(i)
-        N_set.append(T)
-        return
-    include[k] = False
-    powerSet(k + 1)
-    include[k] = True
-    powerSet(k + 1)
+    if a >= b:
+        k = fun1(a,b)
+    else:
+        k = fun1(b,a)
 
+    a = a/k
+    b = b/k
+    check_ring.append((a,b))
 
-##입력값
+##main
+num = int(input())
+ring = list(map(int,input().split()))
 
-while (True):
-    N = int(input())
-    if (0 <= N and N <= 10):
-        break
-
-j=0
-while (j<N):
-    total_s = 1
-    total_b = 0
-
-    s, b = map(int,input().split())
-
-    for i in S:
-        total_s = total_s * i
-    total_s = total_s * s
-    if total_s >= 1000000000:
+stand_ring = ring[0]
+for i in ring:
+    if i == stand_ring:
         continue
+    fun2(stand_ring,i)
 
-    for i in B:
-        total_b = total_b + i
-    total_b = total_b + b
-    if total_b >= 1000000000:
-        continue
-
-    S.append(s)
-    B.append(b)
-    j =  j+1
-
-for i in range(0, N, 1):
-    include.append(True)
-##여러 재료가 나오는 경우의 수
-powerSet(0)
-
-##신맛과 짠맛 차이 구하기
-for i in range(1, 2**N, 1):
-    total_s = 1  ##신맛
-    total_b = 0  ##짠맛
-    diff = 0  ##차이값
-    for j in N_set[i]:
-        total_s = total_s * S[j]
-        total_b = total_b + B[j]
-    diff = abs(total_s - total_b)
-    if diff < min:
-        min = diff
-    if min == 0:
-        break
-
-print(min)
+for j in check_ring:
+    print("%d/%d" %(j[0],j[1]))
