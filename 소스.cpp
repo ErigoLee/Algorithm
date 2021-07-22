@@ -4,16 +4,15 @@
 #include <string>
 #include <algorithm>
 #define MAX 1000
-#define INF 2100000000
-
+int N;
 using namespace std;
 int func(int start, int end, vector<pair<int, int>> node[MAX + 1]) {
-
+    int count = 2100000000;
     int costs[MAX + 1];
     if (start == end) return 0;
 
     for (int i = 0; i < MAX + 1; i++)
-        costs[i] = INF;
+        costs[i] = 2100000000;
     queue<pair<int, int>>qu;
     pair<int, int> p = make_pair(start, 0);
     qu.push(p);
@@ -28,24 +27,29 @@ int func(int start, int end, vector<pair<int, int>> node[MAX + 1]) {
         for (int i = 0; i < size; i++) {
             int next_route_start = node[route_start][i].first;
             int next_cost = node[route_start][i].second + cost;
-            if (costs[next_route_start] > next_cost) {
-                costs[next_route_start] = next_cost;
-                pair<int, int>p2 = make_pair(next_route_start, next_cost);
-                qu.push(p2);
+            if (next_route_start == end) {
+                if (count > next_cost)
+                    count = next_cost;
             }
-
+            else {
+                if (costs[next_route_start] > next_cost) {
+                    costs[next_route_start] = next_cost;
+                    pair<int, int>p2 = make_pair(next_route_start, next_cost);
+                    qu.push(p2);
+                }
+            }
         }
 
     }
 
-    return costs[end];
+    return count;
 }
 
 
 int main() {
     vector<pair<int, int>> node[MAX + 1];
     int count[MAX + 1];
-    int N, M, X;
+    int M, X;
     int max = 0;
     cin >> N >> M >> X;
 
@@ -56,11 +60,11 @@ int main() {
         node[num].push_back(p);
     }
 
-    for (int i = 1; i <= N; i++) {
+    for (int i = 1; i <= N; i++)
         count[i] = func(i, X, node) + func(X, i, node);
-    }
+
     for (int i = 1; i <= N; i++) {
-        if (max < count[i] && count[i] < INF) {
+        if (max < count[i]) {
             max = count[i];
         }
     }
