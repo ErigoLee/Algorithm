@@ -8,14 +8,14 @@ string solution(string new_id) {
     string answer = "";
 
     int length = new_id.length();
-    //1´Ü°è
+    //1ë‹¨ê³„
     for (int i = 0; i < length; i++) {
         if (new_id[i] >= 'A' && new_id[i] <= 'Z') {
             new_id[i] = new_id[i] - 'A' + 'a';
         }
     }
 
-    //2´Ü°è
+    //2ë‹¨ê³„
     string temp = "";
     for (int i = 0; i < length;i++) {
         if ((new_id[i] >= 'a' && new_id[i] <= 'z') || (new_id[i] >= '0' && new_id[i] <= '9') || new_id[i] == '-' || new_id[i] == '_' || new_id[i] == '.') {
@@ -25,7 +25,7 @@ string solution(string new_id) {
     new_id = temp;
     
 
-    //3´Ü°è
+    //3ë‹¨ê³„
     temp = "";
     length = new_id.length();
     bool special_char = false;
@@ -47,7 +47,7 @@ string solution(string new_id) {
     }
     new_id = temp;
     
-    //4´Ü°è
+    //4ë‹¨ê³„
     temp = "";
     length = new_id.length();
     if (new_id[0] == '.') {
@@ -67,13 +67,13 @@ string solution(string new_id) {
         }
     }
     
-    //5´Ü°è
+    //5ë‹¨ê³„
     length = new_id.length();
     if (length == 0) {
         new_id += 'a';
     }
 
-    //6´Ü°è
+    //6ë‹¨ê³„
     temp = "";
     length = new_id.length();
     if (length >= 16) {
@@ -88,7 +88,7 @@ string solution(string new_id) {
     }
     
     
-    //7´Ü°è
+    //7ë‹¨ê³„
     length = new_id.length();
     if (length <= 2) {
         char input_char = new_id[length - 1];
