@@ -31,7 +31,7 @@ int dijkstra(vector<vector<int>> graph, int start_1,int start_2) {
 
 		queue.pop();
 
-		//¿ÞÂÊ
+		//ì™¼ìª½
 		if (current_w - 1>=0) {
 			int next_h = current_h;
 			int next_w = current_w - 1;
@@ -42,7 +42,7 @@ int dijkstra(vector<vector<int>> graph, int start_1,int start_2) {
 
 		}
 
-		//¿À¸¥ÂÊ
+		//ì˜¤ë¥¸ìª½
 		if (current_w + 1 < width) {
 			int next_h = current_h;
 			int next_w = current_w + 1;
@@ -52,7 +52,7 @@ int dijkstra(vector<vector<int>> graph, int start_1,int start_2) {
 			}
 		}
 
-		//À§
+		//ìœ„
 		if (current_h - 1 >= 0) {
 			int next_h = current_h - 1;
 			int next_w = current_w;
@@ -61,7 +61,7 @@ int dijkstra(vector<vector<int>> graph, int start_1,int start_2) {
 				queue.push(make_pair(next_h, next_w));
 			}
 		}
-		//¾Æ·¡
+		//ì•„ëž˜
 		if (current_h + 1 < height) {
 			int next_h = current_h + 1;
 			int next_w = current_w;
