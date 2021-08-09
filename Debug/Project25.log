@@ -1,0 +1,11 @@
+﻿  소스.cpp
+C:\Users\이다연\source\repos\Project25\소스.cpp(13,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project25\소스.cpp(14,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project25\소스.cpp(36,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project25\소스.cpp(45,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project25\소스.cpp(65,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project25\소스.cpp(77,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project25\소스.cpp(82,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project25\소스.cpp(85,31): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project25\소스.cpp(112,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Project25.vcxproj -> C:\Users\이다연\source\repos\Project25\Debug\Project25.exe
