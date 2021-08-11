@@ -7,38 +7,26 @@ using namespace std;
 
 int main() {
 
-	string input_str;
-	vector<int> alpha;
-	cin >> input_str;
-	for (int i = 0; i < input_str.size(); i++) {
-		if (input_str[i] >= 'a' && input_str[i] <= 'z') {
-			input_str[i] = input_str[i] - 'a' + 'A';
-		}
-	}
+	int A, B;
+	int new_A, new_B;
+	cin >> A >> B;
 
-	for (char a = 'A'; a <= 'Z'; a++) {
-		alpha.push_back(0);
-	}
+	int A_100 = A / 100;
+	int A_10 = (A - A_100 * 100) / 10;
+	int A_1 = (A - A_100 * 100) % 10;
+	new_A = A_1 * 100 + A_10 * 10 + A_100;
 
-	for (int i = 0; i < input_str.size(); i++) {
-		alpha[input_str[i] - 'A'] += 1;
-	}
+	int B_100 = B / 100;
+	int B_10 = (B - B_100 * 100) / 10;
+	int B_1 = (B - B_100 * 100) % 10;
+	new_B = B_1 * 100 + B_10 * 10 + B_100;
 
-	int max = 0;
-	char max_char = '?';
-	for (int i = 0; i < alpha.size(); i++) {
-		if (alpha[i] > max) {
-			max = alpha[i];
-			max_char = i + 'A';
-		}
-		else {
-			if (alpha[i] == max) {
-				max_char = '?';
-			}
-		}
+	if (new_A >= new_B) {
+		cout << new_A << endl;
 	}
-
-	cout << max_char << endl;
+	else {
+		cout << new_B << endl;
+	}
 	
 	return 0;
 }
