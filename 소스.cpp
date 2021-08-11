@@ -7,25 +7,38 @@ using namespace std;
 
 int main() {
 
-	int testcase;
-	cin >> testcase;
-	vector<string> answer;
-	for (int i = 0; i < testcase; i++) {
-		int count;
-		string input_str;
-		cin >> count >> input_str;
-		string answer_str="";
-		for (int j = 0; j < input_str.size(); j++) {
-			for (int k = 0; k < count; k++) {
-				answer_str += input_str[j];
+	string input_str;
+	vector<int> alpha;
+	cin >> input_str;
+	for (int i = 0; i < input_str.size(); i++) {
+		if (input_str[i] >= 'a' && input_str[i] <= 'z') {
+			input_str[i] = input_str[i] - 'a' + 'A';
+		}
+	}
+
+	for (char a = 'A'; a <= 'Z'; a++) {
+		alpha.push_back(0);
+	}
+
+	for (int i = 0; i < input_str.size(); i++) {
+		alpha[input_str[i] - 'A'] += 1;
+	}
+
+	int max = 0;
+	char max_char = '?';
+	for (int i = 0; i < alpha.size(); i++) {
+		if (alpha[i] > max) {
+			max = alpha[i];
+			max_char = i + 'A';
+		}
+		else {
+			if (alpha[i] == max) {
+				max_char = '?';
 			}
 		}
-		answer.push_back(answer_str);
 	}
-	
-	for (int i = 0; i < answer.size(); i++) {
-		cout << answer[i] << endl;
-	}
+
+	cout << max_char << endl;
 	
 	return 0;
 }
