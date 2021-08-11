@@ -3,43 +3,37 @@
 #include <vector>
 
 using namespace std;
-int n[10001];
-int n2[10001];
-int n3[10001];
+
 int main() {
-	string A, B;
-	cin >> A >> B;
 
-	for (int i = 0; i < A.size(); i++) {
-		n[10001 - (A.size() - i)] = A[i] - '0';
+	long long A, B, C;
+	cin >> A >> B >> C;
+	
+	if (B >= C) {
+		cout << -1 << endl;
+	}
+	else {
+		long long N = A / (C - B);
+		cout << N + 1 << endl;
 	}
 
-	for (int i = 0; i < B.size(); i++) {
-		n2[10001 - (B.size() - i)] = B[i] - '0';
+	/*
+	if (B >= C) {
+		cout << -1 << endl;
 	}
-
-	int temp = 0;
-	for (int i = 10000; i > -1; i--) {
-		int sum = n[i] + n2[i] + temp;
-		temp = sum / 10;
-		sum = sum % 10;
-		n3[i] = sum;
-	}
-
-	string answer = "";
-	bool check = false;
-	for (int i = 0; i < 10001; i++) {
-		if (check) {
-			answer += to_string(n3[i]);
-		}
-		else {
-			if (n3[i] != 0) {
-				check = true;
-				answer += to_string(n3[i]);
+	else {
+		long long N = 1;
+		while (true) {
+			long long gain = C * N;
+			long long loss = A + (B * N);
+			if (gain > loss) {
+				break;
 			}
+			N++;
 		}
-
+		cout << N << endl;
 	}
-	cout << answer << endl;
+	*/
+	
 	return 0;
 }
