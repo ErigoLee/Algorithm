@@ -4,40 +4,27 @@
 
 using namespace std;
 
-bool checking(int num) {
-
-	if (num == 1000)
-		return false;
-	else {
-		int n_100 = num / 100;
-		int n_10 = (num - n_100 * 100) / 10;
-		int n_1 = (num - n_100 * 100) % 10;
-		if (n_10 * 2 == n_100 + n_1)
-			return true;
-		else
-			return false;
-	}
-}
-
 
 int main() {
 
-	int N;
-	int count = 0;
-	cin >> N;
+	string input_str;
+	cin >> input_str;
+	vector<int> alpha;
 
-	for (int i = 1; i <= N; i++) {
-		if (i < 100) {
-			count++;
-		}
-		else {
-			bool check = checking(i);
-			if (check)
-				count++;
+	for (char a = 'a'; a <= 'z'; a++) {
+		alpha.push_back(-1);
+	}
+
+	for (int i = 0; i < input_str.size(); i++) {
+		if (alpha[input_str[i] - 'a'] == -1) {
+			alpha[input_str[i] - 'a'] = i;
 		}
 	}
 
-	cout << count << endl;
+	for (int i = 0; i < alpha.size(); i++) {
+		cout << alpha[i] << " ";
+	}
+
 	
 	
 	return 0;
