@@ -4,29 +4,37 @@
 
 using namespace std;
 
+int DaieolNum(char daieolChar) {
+
+	if (daieolChar >= 'A' && daieolChar <= 'C')
+		return 3;
+	else if (daieolChar >= 'D' && daieolChar <= 'F')
+		return 4;
+	else if (daieolChar >= 'G' && daieolChar <= 'I')
+		return 5;
+	else if (daieolChar >= 'J' && daieolChar <= 'L')
+		return 6;
+	else if (daieolChar >= 'M' && daieolChar <= 'O')
+		return 7;
+	else if (daieolChar >= 'P' && daieolChar <= 'S')
+		return 8;
+	else if (daieolChar >= 'T' && daieolChar <= 'V')
+		return 9;
+	else
+		return 10;
+
+}
 
 int main() {
 
-	int A, B;
-	int new_A, new_B;
-	cin >> A >> B;
-
-	int A_100 = A / 100;
-	int A_10 = (A - A_100 * 100) / 10;
-	int A_1 = (A - A_100 * 100) % 10;
-	new_A = A_1 * 100 + A_10 * 10 + A_100;
-
-	int B_100 = B / 100;
-	int B_10 = (B - B_100 * 100) / 10;
-	int B_1 = (B - B_100 * 100) % 10;
-	new_B = B_1 * 100 + B_10 * 10 + B_100;
-
-	if (new_A >= new_B) {
-		cout << new_A << endl;
+	string input_str;
+	cin >> input_str;
+	int sum = 0;
+	for (int i = 0; i < input_str.size(); i++) {
+		sum += DaieolNum(input_str[i]);
 	}
-	else {
-		cout << new_B << endl;
-	}
+	
+	cout << sum << endl;
 	
 	return 0;
 }
