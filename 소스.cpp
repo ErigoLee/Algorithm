@@ -7,62 +7,29 @@ using namespace std;
 
 int main() {
 
-	string input_str;
-	cin >> input_str;
-	
+	int testcase;
+	cin >> testcase;
 	int count = 0;
-	for (int i = 0; i < input_str.size(); i++) {
-		count++;
-		if (input_str[i] == 'c') {
-			if (i + 1 < input_str.size()) {
-				if (input_str[i + 1] == '=')
-					i = i + 1;
-				if (input_str[i + 1] == '-')
-					i = i + 1;
-			}
-		}
+	for (int i = 0; i < testcase; i++) {
+		string input_string;
+		bool check = false;
+		cin >> input_string;
 
-		if (input_str[i] == 'd') {
-			if (i + 1 < input_str.size()) {
-				if (input_str[i + 1] == 'z') {
-					if (i + 2 < input_str.size()) {
-						if (input_str[i + 2] == '=')
-							i = i + 2;
+		for (int j = 2; j < input_string.size(); j++) {
+			for (int k = 0; k < j - 1; k++) {
+				if (input_string[k] == input_string[j]) {
+					if (input_string[j - 1] != input_string[j]) {
+						check = true;
+						break;
 					}
 				}
-				if (input_str[i + 1] == '-')
-					i = i + 1;
 			}
+			if (check)
+				break;
 		}
 
-		if (input_str[i] == 'l') {
-			if (i + 1 < input_str.size()) {
-				if (input_str[i + 1] == 'j')
-					i = i + 1;
-			}
-		}
-
-		if (input_str[i] == 'n'){
-			if (i + 1 < input_str.size()) {
-				if (input_str[i + 1] == 'j')
-					i = i + 1;
-			}
-		}
-
-		if (input_str[i] == 's') {
-			if (i + 1 < input_str.size()) {
-				if (input_str[i + 1] == '=')
-					i = i + 1;
-			}
-		}
-		
-		if (input_str[i] == 'z') {
-			if (i + 1 < input_str.size()) {
-				if (input_str[i + 1] == '=')
-					i = i + 1;
-			}
-		}
-		
+		if (!check)
+			count++;
 	}
 
 	cout << count << endl;
