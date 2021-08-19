@@ -1,0 +1,4 @@
+﻿  소스.cpp
+C:\Users\이다연\source\repos\Project34\소스.cpp(19,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\이다연\source\repos\Project34\소스.cpp(66,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Project34.vcxproj -> C:\Users\이다연\source\repos\Project34\Debug\Project34.exe
