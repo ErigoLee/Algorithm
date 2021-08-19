@@ -1,0 +1,96 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <queue>
+#define INF 100000000
+using namespace std;
+
+int dijkstra(int start, int end, vector<vector<pair<int, int>>> graph, int s,vector<int> cost) {
+    cost[start] = 0;
+    priority_queue<pair<int, int>> node;
+    for (int i = 0; i < graph[start].size(); i++) {
+        int next = graph[start][i].first;
+        if (next == s)
+            continue;
+        int nextcost = graph[start][i].second;
+        node.push(make_pair(-nextcost,next));
+    }
+
+    while (!node.empty()) {
+        int next = node.top().second;
+        int nextcost = -node.top().first;
+
+        node.pop();
+        if (next == s)
+            continue;
+        if (cost[next] > nextcost) {
+            cost[next] = nextcost;
+            if (next == end)
+                continue;
+            for (int i = 0; i < graph[next].size(); i++) {
+                node.push(make_pair(-graph[next][i].second-nextcost, graph[next][i].first));
+            }
+        }
+    }
+
+    return cost[end];
+
+}
+
+int solution(int n, int s, int a, int b, vector<vector<int>> fares) {
+    int answer = INF;
+    vector<vector<pair<int,int>>> graph(n + 1);
+    vector<int> cost;
+    for (int i = 0; i < fares.size(); i++) {
+        int a = fares[i][0];
+        int b = fares[i][1];
+        int c = fares[i][2];
+        graph[a].push_back(make_pair(b,c));
+        graph[b].push_back(make_pair(a,c));
+    }
+    for (int i = 0; i <= n; i++) {
+        cost.push_back(INF);
+    }
+
+    int costA = 0, costB = 0, costSum= 0;
+    //합승X
+    costA = dijkstra(s,a,graph,s,cost);
+    costB = dijkstra(s,b,graph,s,cost);
+    if (answer > costA + costB)
+        answer = costA + costB;
+
+    for (int i = 1; i <= n; i++) {
+        if (i == s)
+            continue;
+        costSum = dijkstra(s,i,graph,s,cost);
+        costA = dijkstra(i,a,graph,s,cost);
+        costB = dijkstra(i,b,graph,s,cost);
+        if (answer > costSum + costA + costB)
+            answer = costSum + costA + costB;
+    }
+
+    return answer;
+}
+
+int main() {
+    int answer;
+    int n = 6;
+    int s = 4;
+    int a = 6;
+    int b = 2;
+    //[[4, 1, 10], [3, 5, 24], [5, 6, 2], [3, 1, 41], [5, 1, 24], [4, 6, 50], [2, 4, 66], [2, 3, 22], [1, 6, 25]]
+    int fares_array[][3] = { {4, 1, 10 }, { 3, 5, 24 }, { 5, 6, 2 }, { 3, 1, 41 }, { 5, 1, 24 }, { 4, 6, 50 }, { 2, 4, 66 }, { 2, 3, 22 }, { 1, 6, 25 } };
+    vector<vector<int>> fares;
+    for (int i = 0; i < 9; i++) {
+        vector<int> temp;
+        temp.push_back(fares_array[i][0]);
+        temp.push_back(fares_array[i][1]);
+        temp.push_back(fares_array[i][2]);
+        fares.push_back(temp);
+        temp.clear();
+    }
+
+    answer = solution(n,s,a,b,fares);
+    cout << answer << endl;
+    return 0;
+}

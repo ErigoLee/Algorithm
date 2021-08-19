@@ -1,0 +1,72 @@
+#include <string>
+#include <vector>
+#include <queue>
+#define INF 100000000
+using namespace std;
+
+int dijkstra(int start, int end, vector<vector<pair<int, int>>> graph, int s, vector<int> cost, int a, int b) {
+    cost[start] = 0;
+    queue<pair<int, int>> node;
+    for (int i = 0; i < graph[start].size(); i++) {
+        int next = graph[start][i].first;
+        if (next == s)
+            continue;
+        int nextcost = graph[start][i].second;
+        node.push(make_pair(next, nextcost));
+    }
+
+    while (!node.empty()) {
+        int next = node.front().first;
+        int nextcost = node.front().second;
+
+        node.pop();
+        if (next == s)
+            continue;
+        if (cost[next] > nextcost) {
+            cost[next] = nextcost;
+            if (next == start || next == end || next ==  a || next == b)
+                continue;
+            for (int i = 0; i < graph[next].size(); i++) {
+                node.push(make_pair(graph[next][i].first, graph[next][i].second + nextcost));
+            }
+        }
+    }
+
+    return cost[end];
+
+}
+
+int solution(int n, int s, int a, int b, vector<vector<int>> fares) {
+    int answer = INF;
+    vector<vector<pair<int, int>>> graph(n + 1);
+    vector<int> cost;
+    for (int i = 0; i < fares.size(); i++) {
+        int a = fares[i][0];
+        int b = fares[i][1];
+        int c = fares[i][2];
+        graph[a].push_back(make_pair(b, c));
+        graph[b].push_back(make_pair(a, c));
+    }
+    for (int i = 0; i <= n; i++) {
+        cost.push_back(INF);
+    }
+
+    int costA = 0, costB = 0, costSum = 0;
+    //합승X
+    costA = dijkstra(s, a, graph, s, cost, a, b);
+    costB = dijkstra(s, b, graph, s, cost, a, b);
+    if (answer > costA + costB)
+        answer = costA + costB;
+
+    for (int i = 1; i <= n; i++) {
+        if (i == s)
+            continue;
+        costSum = dijkstra(s, i, graph, s, cost, a, b);
+        costA = dijkstra(i, a, graph, s, cost, a, b);
+        costB = dijkstra(i, b, graph, s, cost,a, b);
+        if (answer > costSum + costA + costB)
+            answer = costSum + costA + costB;
+    }
+
+    return answer;
+}
