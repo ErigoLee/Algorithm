@@ -1,0 +1,107 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#define INF 1000000000
+using namespace std;
+
+int _max = 0;
+string max_str = "";
+int _min = INF;
+string min_str = "";
+int cnt;
+string condition;
+bool check[10];
+void permutation(string str,int dept) {
+	if (str.length() >= dept) {
+		bool checking = false;
+		//cout << condition.length() << endl;
+		//cout << dept << endl;
+		for (int j = 0; j < dept-1; j++) {
+			if (condition[j] == '<') {
+				if (str[j] >= str[j + 1])
+				{
+					checking = true;
+					break;
+				}
+			}
+			else {
+				if (str[j] <= str[j + 1]) {
+					checking = true;
+					break;
+				}
+			}
+		}
+
+		if (!checking) {
+			int num = stoi(str);
+			if (num > _max) {
+				_max = num;
+				max_str = str;
+			}
+			if (_min > num) {
+				_min = num;
+				min_str = str;
+			}
+		}
+		return;
+	}
+
+	for (char b = '0'; b <= '9'; b++) {
+
+		if (!check[b - '0']) {
+			str.push_back(b);
+			check[b - '0'] = true;
+			permutation(str, dept);
+			check[b - '0'] = false;
+			str.pop_back();
+		}
+	}
+}
+
+
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0); //cin 실행속도 향상
+	
+	cin >> cnt;
+	cin >> condition;
+
+	permutation("",cnt+1);
+	
+	/*
+	for (int i = 0; i < candidates.size(); i++) {
+		bool check = false;
+		for (int j = 0; j < cnt; j++) {
+			if (condition[j] == '<') {
+				if (candidates[i][j] >= candidates[i][j+1])
+				{
+					check = true;
+					break;
+				}
+			}
+			else {
+				if (candidates[i][j] <= candidates[i][j + 1]) {
+					check = true;
+					break;
+				}
+			}
+		}
+
+		if (!check) {
+			int num = stoi(candidates[i]);
+			if (num > max) {
+				max = num;
+				max_str = candidates[i];
+			}
+			if (min > num) {
+				min = num;
+				min_str = candidates[i];
+			}
+		}
+	}
+	*/
+	cout << max_str << endl;
+	cout << min_str << endl;
+	
+	return 0;
+}
