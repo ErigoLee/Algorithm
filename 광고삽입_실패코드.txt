@@ -1,0 +1,109 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+int cnt[360000]; //100*60*60
+int _max = 0;
+int _max_sec = 360000;
+
+void manyPeopleWatching(int endTime, int advtime) {
+    int sum = 0;
+    for (int i = endTime - advtime; i <= endTime; i++) {
+        sum += cnt[i];
+    }
+    if (sum>_max) {
+        _max = sum;
+        _max_sec = endTime - advtime;
+    }
+
+    if (sum == _max) {
+        if (_max_sec > endTime - advtime) {
+            _max_sec = endTime - advtime;
+        }
+    }
+}
+
+
+
+
+string solution(string play_time, string adv_time, vector<string> logs) {
+    
+    string hour = ""; hour.push_back(play_time[0]); hour.push_back(play_time[1]);
+    string min = ""; min.push_back(play_time[3]); min.push_back(play_time[4]);
+    string sec = ""; sec.push_back(play_time[6]); sec.push_back(play_time[7]);
+    int play_time_sec = stoi(hour) * 60 * 60 + stoi(min) * 60 + stoi(sec);
+    hour = ""; hour.push_back(adv_time[0]); hour.push_back(adv_time[1]);
+    min = ""; min.push_back(adv_time[3]); min.push_back(adv_time[4]);
+    sec = ""; sec.push_back(adv_time[6]); sec.push_back(adv_time[7]);
+    int adv_time_sec = stoi(hour) * 60 * 60 + stoi(min) * 60 + stoi(sec);
+
+
+    for (int i = 0; i < logs.size(); i++) {
+        hour = ""; hour.push_back(logs[i][0]); hour.push_back(logs[i][1]);
+        min = ""; min.push_back(logs[i][3]); min.push_back(logs[i][4]);
+        sec = ""; sec.push_back(logs[i][6]); sec.push_back(logs[i][7]);
+        int start_sec = stoi(hour) * 60 * 60 + stoi(min) * 60 + stoi(sec);
+        hour = ""; hour.push_back(logs[i][9]); hour.push_back(logs[i][10]);
+        min = ""; min.push_back(logs[i][12]); min.push_back(logs[i][13]);
+        sec = ""; sec.push_back(logs[i][15]); sec.push_back(logs[i][16]);
+        int end_sec = stoi(hour) * 60 * 60 + stoi(min) * 60 + stoi(sec);
+        for (int j = start_sec; j <= end_sec; j++) {
+            cnt[j]++;
+        }
+    }
+    
+    for (int i = adv_time_sec; i <= play_time_sec; i++) {
+        manyPeopleWatching(i,adv_time_sec);
+    }
+    
+    int answer_hour = _max_sec / (60 * 60);
+    int answer_min = (_max_sec - answer_hour * 60 * 60) / 60;
+    int answer_sec = (_max_sec - answer_hour * 60 * 60) % 60;
+    
+    string answer = "";
+    string answer_hour_str = "";
+    string answer_min_str = "";
+    string answer_sec_str = "";
+    if (answer_hour < 10) {
+        answer_hour_str = '0' + to_string(answer_hour);
+    }
+    else {
+        answer_hour_str = to_string(answer_hour);
+    }
+
+    if (answer_min < 10) {
+        answer_min_str = '0' + to_string(answer_min);
+    }
+    else {
+        answer_min_str = to_string(answer_min);
+    }
+
+
+    if (answer_sec < 10) {
+        answer_sec_str = '0' + to_string(answer_sec);
+    }
+    else {
+        answer_sec_str = to_string(answer_sec);
+    }
+    answer = answer_hour_str + ":" + answer_min_str + ":" + answer_sec_str;
+    return answer;
+}
+
+int main() {
+
+    string play_time = "02:03:55";
+    string adv_time = "00:14:15";
+    string logs_str[5] = { "01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30" };
+    vector<string> logs;
+    for (int i = 0; i < 5; i++) {
+        logs.push_back(logs_str[i]);
+    }
+
+
+    string answer = solution(play_time,adv_time,logs);
+
+    cout << answer << endl;
+
+}
