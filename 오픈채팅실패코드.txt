@@ -1,0 +1,56 @@
+#include <string>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+vector<string> solution(vector<string> record) {
+
+
+    vector<string> situation;
+    vector<string> id;
+    vector<string> nickname;
+
+    int size = record.size();
+    for (int i = 0; i < size; i++) {
+        stringstream aa(record[i]);
+        string _situation, _id, _nickname;
+        aa >> _situation >> _id >> _nickname;
+
+        for (int j = 0; j < i; j++) {
+            if (_id.compare(id[j]) == 0) {
+                if (_nickname.compare(nickname[j]) != 0) {
+                    if (_situation.compare("Leave")==0) {
+                        _nickname = nickname[j];
+                        
+                    }
+                    else{
+                        nickname[j] = _nickname;
+                    }
+                    
+                }
+            }
+        }
+        situation.push_back(_situation);
+        id.push_back(_id);
+        nickname.push_back(_nickname);
+    }
+    //str1.compare(str2) == 0
+    vector<string> answer;
+    //compare
+
+    for (int i = 0; i < size; i++) {
+        if (situation[i].compare("Enter")==0) {
+            string _answer = nickname[i]+"님이 들어왔습니다.";
+            answer.push_back(_answer);
+        }
+        if (situation[i].compare("Leave")==0) {
+            string _answer = nickname[i] + "님이 나갔습니다.";
+            answer.push_back(_answer);
+        }
+    }
+
+
+    
+    return answer;
+}
