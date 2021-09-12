@@ -1,0 +1,174 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <queue>
+#include <tuple>
+
+#define INF 10000
+using namespace std;
+int hero_size = 2;
+
+int distanceFind(vector<vector<int>> graph, int hero_x, int hero_y, int fish_x, int fish_y) {
+
+	queue<tuple<int, int,int>> _queue;
+	int distance = INF;
+	int graph_size = graph.size();
+	_queue.push(make_tuple(hero_x,hero_y,0));
+	while (!_queue.empty()) {
+		int index_x = get<0>(_queue.front());
+		int index_y = get<1>(_queue.front());
+		int now_distance = get<2>(_queue.front());
+		_queue.pop();
+		if (hero_size >= graph[index_x][index_y] && distance > now_distance) {
+			if (index_x == fish_x && index_y == fish_y) {
+				if (distance > now_distance)
+					distance = now_distance;
+			}
+			else {
+				//up
+				if (index_x - 1 >= 0) {
+					int next_x = index_x - 1;
+					int next_y = index_y;
+					int next_distance = now_distance + 1;
+					_queue.push(make_tuple(next_x,next_y,next_distance));
+				}
+				//down
+				if (index_x + 1 < graph_size) {
+					int next_x = index_x + 1;
+					int next_y = index_y;
+					int next_distance = now_distance + 1;
+					_queue.push(make_tuple(next_x,next_y,next_distance));
+				}
+				//left
+				if (index_y - 1 >= 0) {
+					int next_x = index_x;
+					int next_y = index_y - 1;
+					int next_distance = now_distance + 1;
+					_queue.push(make_tuple(next_x,next_y,next_distance));
+				}
+				//right
+				if (index_y + 1 < graph_size) {
+					int next_x = index_x;
+					int next_y = index_y + 1;
+					int next_distance = now_distance + 1;
+					_queue.push(make_tuple(next_x,next_y,next_distance));
+				}
+			}
+
+		}
+
+	}
+
+	return distance;
+}
+
+
+int solution(vector<vector<int>> graph, vector<pair<int,int>> fish_places, pair<int, int> hero_place) {
+
+	int eating = 0;
+	int hero_x = hero_place.first;
+	int hero_y = hero_place.second;
+	int timer = 0;
+	graph[hero_x][hero_y] = 0;
+	while (true) {
+		int distance = INF;
+		int size = fish_places.size();
+		if (size == 0)
+			break;
+		int eating_fish_x = -1;
+		int eating_fish_y = -1;
+		for (auto fish_place : fish_places) {
+			int first_index = fish_place.first;
+			int second_index = fish_place.second;
+			
+			if (hero_size > graph[first_index][second_index] && graph[first_index][second_index] > 0) {
+				int new_distance = distanceFind(graph, hero_x, hero_y, first_index, second_index);
+				//cout << new_distance << endl;
+				if (distance > new_distance) {
+					distance = new_distance;
+					eating_fish_x = first_index;
+					eating_fish_y = second_index;
+				}
+				
+				if (distance == new_distance) {
+					if (first_index < eating_fish_x) {
+						eating_fish_x = first_index;
+						eating_fish_y = second_index;
+					}
+					else {
+						if (eating_fish_x == first_index) {
+							if (second_index < eating_fish_y) {
+								eating_fish_x = first_index;
+								eating_fish_y = second_index;
+							}
+						}
+					}
+				}
+			}	
+		}
+
+		if (eating_fish_x != -1 && eating_fish_y != -1) {
+			eating++;
+			timer += distance;
+			vector<pair<int, int>> new_fish_places;
+			for (auto fish_place : fish_places) {
+				if (fish_place.first != eating_fish_x || fish_place.second != eating_fish_y) {
+					new_fish_places.push_back(fish_place);
+				}
+			}
+			fish_places = new_fish_places;
+			hero_x = eating_fish_x;
+			hero_y = eating_fish_y;
+			graph[eating_fish_x][eating_fish_y] = 0;
+			if (hero_size == eating) {
+				hero_size++;
+				eating = 0;
+			}
+		}
+		else {
+			break;
+		}
+	}
+
+	return timer;
+
+}
+
+
+
+int main() {
+
+	int N;
+	cin >> N;
+	vector<vector<int>> graph;
+	int fish_count = 0;
+	vector<pair<int, int>> fish_places;
+	pair<int, int> hero_place;
+	for (int i = 0; i < N; i++) {
+		vector<int> temp;
+		for (int j = 0; j < N; j++) {
+			int a;
+			cin >> a;
+			if (a > 0 && a < 9) {
+				fish_count++;
+				pair<int, int> fish_place = make_pair(i,j);
+				fish_places.push_back(fish_place);
+			}
+			
+			if (a == 9) {
+				hero_place = make_pair(i,j);
+			}
+				
+			temp.push_back(a);
+		}
+		graph.push_back(temp);
+		temp.clear();
+	}
+	if (fish_count == 0)
+		cout << 0 << endl;
+	else {
+		int result = solution(graph,fish_places,hero_place);
+		cout << result << endl;
+	}
+	return 0;
+}
