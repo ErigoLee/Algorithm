@@ -1,0 +1,303 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int N;
+
+int solution(vector<vector<int>> graph, vector<pair<int, char>> directions)
+{
+	int timer = 0;
+	int direction_pointer = 0;
+	int direction = 0; //방향
+
+	pair<int, int> head = make_pair(0,0);
+	pair<int, int> tail = make_pair(0, 0);
+	graph[0][0] = 2;//뱀 존재
+	int length = 1;
+	vector<int> timer_log;
+	while (true) {
+		int head_first = head.first;
+		int head_second = head.second;
+		bool ending = false;
+		
+		if (direction_pointer < directions.size()) {
+			if (directions[direction_pointer].first == timer) {
+
+				if (directions[direction_pointer].second == 'D') {
+					direction++;
+					if (direction == 4)
+						direction = 0;
+				}
+				else {
+					direction--;
+					if (direction == -1)
+						direction = 3;
+				}
+
+				direction_pointer++;
+
+			}
+		}
+
+		
+
+
+		timer_log.push_back(direction);
+		int next_first, next_second;
+		switch (direction)
+		{
+		case 0:
+			next_first = head_first;
+			next_second = head_second + 1;
+			if (next_second < N) {
+				if (graph[next_first][next_second] == 1) {
+					head = make_pair(next_first,next_second);
+					length++;
+					graph[next_first][next_second] = 2;
+				}
+				else if (graph[next_first][next_second] == 2) {
+					ending = true;
+				}
+				else {
+					head = make_pair(next_first, next_second);
+					graph[next_first][next_second] = 2;
+					int next_tail_first, next_tail_second;
+					switch (timer_log[timer - length + 1]) {
+					case 0:
+						next_tail_first = tail.first;
+						next_tail_second = tail.second + 1;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first,next_tail_second);
+						break;
+					case 1:
+						next_tail_first = tail.first+1;
+						next_tail_second = tail.second;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 2:
+						next_tail_first = tail.first;
+						next_tail_second = tail.second - 1;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 3:
+						next_tail_first = tail.first-1;
+						next_tail_second = tail.second;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					}
+
+
+					
+				}
+			}
+			else {
+				ending = true;
+			}
+			break;
+		case 1:
+			next_first = head_first + 1;
+			next_second = head_second;
+			if (next_first < N) {
+				if (graph[next_first][next_second] == 1) {
+					head = make_pair(next_first, next_second);
+				}
+				else if (graph[next_first][next_second] == 2) {
+					ending = true;
+				}
+				else {
+					head = make_pair(next_first, next_second);
+					graph[next_first][next_second] = 2;
+					int next_tail_first, next_tail_second;
+					switch (timer_log[timer - length + 1]) {
+					case 0:
+						next_tail_first = tail.first;
+						next_tail_second = tail.second + 1;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 1:
+						next_tail_first = tail.first + 1;
+						next_tail_second = tail.second;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 2:
+						next_tail_first = tail.first;
+						next_tail_second = tail.second - 1;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 3:
+						next_tail_first = tail.first - 1;
+						next_tail_second = tail.second;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					}
+				}
+			}
+			else {
+				ending = true;
+			}
+			break;
+		case 2:
+			next_first = head_first;
+			next_second = head_second - 1;
+			if (next_second >= 0) {
+				if (graph[next_first][next_second] == 1) {
+					head = make_pair(next_first, next_second);
+				}
+				else if (graph[next_first][next_second] == 2) {
+					ending = true;
+				}
+				else {
+					head = make_pair(next_first, next_second);
+					graph[next_first][next_second] = 2;
+					int next_tail_first, next_tail_second;
+					switch (timer_log[timer - length + 1]) {
+					case 0:
+						next_tail_first = tail.first;
+						next_tail_second = tail.second + 1;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 1:
+						next_tail_first = tail.first + 1;
+						next_tail_second = tail.second;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 2:
+						next_tail_first = tail.first;
+						next_tail_second = tail.second - 1;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 3:
+						next_tail_first = tail.first - 1;
+						next_tail_second = tail.second;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					}
+				}
+			}
+			else {
+				ending = true;
+			}
+			break;
+		case 3:
+			next_first = head_first - 1;
+			next_second = head_second;
+			if (next_first >= 0) {
+				if (graph[next_first][next_second] == 1) {
+					head = make_pair(next_first, next_second);
+				}
+				else if (graph[next_first][next_second] == 2) {
+					ending = true;
+				}
+				else {
+					head = make_pair(next_first, next_second);
+					graph[next_first][next_second] = 2;
+					int next_tail_first, next_tail_second;
+					switch (timer_log[timer - length + 1]) {
+					case 0:
+						next_tail_first = tail.first;
+						next_tail_second = tail.second + 1;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 1:
+						next_tail_first = tail.first + 1;
+						next_tail_second = tail.second;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 2:
+						next_tail_first = tail.first;
+						next_tail_second = tail.second - 1;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					case 3:
+						next_tail_first = tail.first - 1;
+						next_tail_second = tail.second;
+						graph[tail.first][tail.second] = 0;
+						graph[next_tail_first][next_tail_second] = 2;
+						tail = make_pair(next_tail_first, next_tail_second);
+						break;
+					}
+				}
+			}
+			else {
+				ending = true;
+			}
+			break;
+		}
+
+		timer++;
+		if (ending)
+			break;
+
+		
+	}
+
+
+	return timer;
+}
+
+int main() {
+
+	
+	cin >> N;
+	int K;
+	cin >> K;
+	vector<vector<int>> graph;
+	vector<int> temp;
+	for (int i = 0; i < N; i++) {
+		temp.push_back(0);
+	}
+	for (int i = 0; i < N; i++) {
+		graph.push_back(temp);
+	}
+
+	for (int i = 0; i < K; i++) {
+		int a, b;
+		cin >> a >> b;
+		graph[a - 1][b - 1] = 1;
+	}
+
+	int direct_count;
+	cin >> direct_count;
+	vector<pair<int, char>> directions;
+	for (int i = 0; i < direct_count; i++) {
+		int a;
+		char b;
+		cin >> a >> b;
+		pair<int, char> _direct = make_pair(a,b);
+		directions.push_back(_direct);
+	}
+
+	int result = solution(graph,directions);
+	cout << result << endl;
+	return 0;
+}
