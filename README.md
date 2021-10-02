@@ -15,6 +15,8 @@ int totalExpense = _queue.front().second;
 이와 같은 형태의 변수들이 있을 것입니다.     
 palace는 현재 위치고, totalExpense는 알 수 있다시피, 그 동안 더한 비용입니다.   
 여기서 저는
+<pre>
+<code>
 for (int i = palace; i < N; i++) {    
                         pair<int, int> _day = days[i];      
                         int time = _day.first;          
@@ -25,7 +27,9 @@ for (int i = palace; i < N; i++) {
                                 pair<int, int> _next = make_pair(nextPalace,nextExpense);     
                                 _queue.push(_next);       
                          }         
-}       
+}
+</code>
+</pre>
 이와 같이 탐색해서, 다음 날에 근무할 지 아니면 다다음날에 근무할지를 결정해야 하는 데,    
 퇴사 전까지 안전하게 근무할 수 있는 여부는    
 if문에서 걸려줍니다. 
