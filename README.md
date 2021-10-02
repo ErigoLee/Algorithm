@@ -16,16 +16,15 @@ int totalExpense = _queue.front().second;
 palace는 현재 위치고, totalExpense는 알 수 있다시피, 그 동안 더한 비용입니다.   
 여기서 저는
 for (int i = palace; i < N; i++) {    
-			pair<int, int> _day = days[i];      
-			int time = _day.first;          
-			int expense = _day.second;          
-			if (i + time <= N) {            
-				int nextPalace = i + time;          
-				int nextExpense = expense + totalExpense;           
-				pair<int, int> _next = make_pair(nextPalace,nextExpense);     
-				_queue.push(_next);       
-			}         
-		}       
+                        pair<int, int> _day = days[i];      
+                        int time = _day.first;          
+                        int expense = _day.second;          
+                        if (i + time <= N) {            
+                                int nextPalace = i + time;          
+                                int nextExpense = expense + totalExpense;           
+                                pair<int, int> _next = make_pair(nextPalace,nextExpense);     
+                                _queue.push(_next);       
+                         }         
 }       
 이와 같이 탐색해서, 다음 날에 근무할 지 아니면 다다음날에 근무할지를 결정해야 하는 데,    
 퇴사 전까지 안전하게 근무할 수 있는 여부는    
