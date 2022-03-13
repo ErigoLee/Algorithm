@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-	string name;
-	cin >> name;
-	cout << name << "??!" << endl;
+	int year;
+	cin >> year;
+	cout << year - 543 << endl;
 }
