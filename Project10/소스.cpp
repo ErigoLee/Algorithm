@@ -3,19 +3,24 @@
 using namespace std;
 
 int main() {
-	int hour; int min; //입력시간
-	int interval; //요리하는데 필요한 시간
-	cin >> hour >> min;
-	cin >> interval;
-	min = min + interval;
-	if (min >= 60) {
-		int temp_hour = min / 60;
-		int temp_min = min % 60;
-		hour += temp_hour;
-		min = temp_min;
+	int dice, dice2, dice3; //주사위값
+	int result;//결과값
+	cin >> dice >> dice2 >> dice3;
+	if (dice == dice2 && dice2 == dice3) {
+		result = dice * 1000 + 10000;
 	}
-	if (hour >= 24) {
-		hour = hour % 24;
+	else if (dice == dice2) {
+		result = dice * 100 + 1000;
 	}
-	cout << hour << " " << min << endl;
+	else if (dice2 == dice3) {
+		result = dice2 * 100 + 1000;
+	}
+	else if (dice == dice3) {
+		result = dice * 100 + 1000;
+	}
+	else {
+		result = dice > dice2 ? (dice > dice3 ? dice : dice3) : (dice2 > dice3 ? dice2 : dice3);
+		result = result * 100;
+	}
+	cout << result << endl;
 }
